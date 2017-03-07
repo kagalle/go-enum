@@ -20,12 +20,9 @@ func NewEnumbase(keys []int, current int) *Enumbase {
 	return enum
 }
 
-type EnumOne struct {
-	Enumbase
+func (enum *Enumbase) Clone() *Enumbase {
+    newenum := NewEnumbase(enum.keys, enum.currentkey)
+    return newenum
 }
 
-// this needs to be duplicated for each enum type
-func NewEnumOne(keys []int, current int) *EnumOne {
-	enum := NewEnumbase(keys, current)
-	return enum
-}
+func (enum *Enumbase) Clone() *Enumbase {
