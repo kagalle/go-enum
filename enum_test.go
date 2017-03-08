@@ -2,7 +2,6 @@ package util
 
 // https://play.golang.org/p/4FkNSiUDMg
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -25,12 +24,12 @@ func NewEnumInt(keys []int, current int) *EnumIntImpl {
 
 func TestEnum(t *testing.T) {
 	e := NewEnumInt([]int{1, 2, 3}, 2)
-	fmt.Printf("TestEnum %v\n", e.currentkey)
 	e.Print()
 	f := e.Clone()
 	f.Set(2)
 	f.Print()
 	assert.True(t, e.Equal(f))
 	f.Set(1)
+	f.Print()
 	assert.False(t, e.Equal(f))
 }

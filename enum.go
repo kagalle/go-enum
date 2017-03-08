@@ -6,8 +6,6 @@ import (
 	"reflect"
 )
 
-// type enummap map[string]int
-
 type Enumbase interface {
 	Init(keys []int, current int)
 	Clone() *EnumbaseImpl
@@ -17,7 +15,6 @@ type Enumbase interface {
 }
 
 type EnumbaseImpl struct {
-	// instance string
 	keys       map[int]interface{}
 	currentkey int
 }
@@ -26,7 +23,6 @@ type EnumbaseImpl struct {
 func NewEnumbase(keys []int, current int) *EnumbaseImpl {
 	enum := new(EnumbaseImpl)
 	enum.Init(keys, current)
-	fmt.Printf("NewEnumbase %v\n", enum)
 	return enum
 }
 
@@ -36,7 +32,6 @@ func (enum *EnumbaseImpl) Init(keys []int, current int) {
 		enum.keys[val] = nil
 	}
 	enum.currentkey = current
-	fmt.Printf("Init %v\n", enum)
 }
 
 func (enum *EnumbaseImpl) Clone() *EnumbaseImpl {
@@ -69,5 +64,5 @@ func (enum *EnumbaseImpl) Equal(other Enumbase) bool {
 }
 
 func (enum *EnumbaseImpl) Print() {
-	fmt.Printf("Print %v\n%v\n", enum.keys, enum.currentkey)
+	fmt.Printf("%v\n", enum)
 }
