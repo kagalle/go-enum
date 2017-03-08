@@ -17,20 +17,20 @@ type EnumIntImpl struct {
 }
 
 // this needs to be duplicated for each enum type
-func NewEnumOne(keys []int, current int) *EnumIntImpl {
+func NewEnumInt(keys []int, current int) *EnumIntImpl {
 	enum := new(EnumIntImpl)
 	enum.Init(keys, current)
 	return enum
 }
 
 func TestEnum(t *testing.T) {
-	e := NewEnumOne([]int{1, 2, 3}, 2)
+	e := NewEnumInt([]int{1, 2, 3}, 2)
 	fmt.Printf("TestEnum %v\n", e.currentkey)
 	e.Print()
 	f := e.Clone()
 	f.Set(2)
 	f.Print()
-	assert.Equal(t, e, f)
+	assert.True(t, e.Equal(f))
 	f.Set(1)
-	assert.NotEqual(t, e, f)
+	assert.False(t, e.Equal(f))
 }

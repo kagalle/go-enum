@@ -9,9 +9,9 @@ import (
 // type enummap map[string]int
 
 type Enumbase interface {
-	Init(keys []int, current int) Enumbase
-	Clone() Enumbase
-	Set(current int) (Enumbase, error)
+	Init(keys []int, current int)
+	Clone() *EnumbaseImpl
+	Set(current int) error
 	Equal(other Enumbase) bool
 	Print()
 }
@@ -30,17 +30,16 @@ func NewEnumbase(keys []int, current int) *EnumbaseImpl {
 	return enum
 }
 
-func (enum EnumbaseImpl) Init(keys []int, current int) Enumbase {
+func (enum *EnumbaseImpl) Init(keys []int, current int) {
 	enum.keys = make(map[int]interface{})
 	for _, val := range keys {
 		enum.keys[val] = nil
 	}
 	enum.currentkey = current
 	fmt.Printf("Init %v\n", enum)
-	return enum
 }
 
-func (enum EnumbaseImpl) Clone() Enumbase {
+func (enum *EnumbaseImpl) Clone() *EnumbaseImpl {
 	// http://stackoverflow.com/a/27848197/3728147
 	keys := make([]int, len(enum.keys))
 	i := 0
@@ -52,23 +51,23 @@ func (enum EnumbaseImpl) Clone() Enumbase {
 	return newenum
 }
 
-func (enum EnumbaseImpl) Set(current int) (Enumbase, error) {
+func (enum *EnumbaseImpl) Set(current int) error {
 	_, ok := enum.keys[current]
 	if !ok {
-		return nil, errors.New("invalid enum value")
+		return errors.New("invalid enum value")
 	} else {
 		enum.currentkey = current
-		return enum, nil
+		return nil
 	}
 }
 
-func (enum EnumbaseImpl) Equal(other Enumbase) bool {
-	otherbase := other.(EnumbaseImpl)
+func (enum *EnumbaseImpl) Equal(other Enumbase) bool {
+	otherbase := other.(*EnumbaseImpl)
 	typesame := reflect.TypeOf(enum) == reflect.TypeOf(otherbase)
 	valuesame := enum.currentkey == otherbase.currentkey
 	return typesame && valuesame
 }
 
-func (enum EnumbaseImpl) Print() {
+func (enum *EnumbaseImpl) Print() {
 	fmt.Printf("Print %v\n%v\n", enum.keys, enum.currentkey)
 }
