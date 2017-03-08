@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type EnumInt interface {
-	Enumbase
-}
+// type EnumInt interface {
+// 	Enumbase
+// }
 
 type EnumIntImpl struct {
 	EnumbaseImpl
