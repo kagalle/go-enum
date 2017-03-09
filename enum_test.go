@@ -1,25 +1,34 @@
 package util
 
-// https://play.golang.org/p/4FkNSiUDMg
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-// type EnumInt interface {
-// 	Enumbase
-// }
-
-type EnumIntImpl struct {
-	EnumbaseImpl
+type EnumTest struct {
+	*EnumInt
 }
 
 // this needs to be duplicated for each enum type
-func NewEnumInt(keys []int, current int) *EnumIntImpl {
-	enum := new(EnumIntImpl)
-	enum.Init(keys, current)
+func NewEnumTest(keys []int, current int) *EnumTest {
+	enum := new(EnumTest)
+	enum.EnumInt = NewEnumInt(keys, current)
 	return enum
+}
+
+func (enum *EnumTest) Set(current int) error {
+	return enum.EnumInt.Set(current)
+}
+
+func (enum *EnumTest) Clone() *EnumTest {
+	newenum := new(EnumTest)
+	newenum.EnumInt = enum.EnumInt.Clone()
+	return newenum
+}
+
+func (enum *EnumTest) Equal(other *EnumTest) bool {
+	return enum.EnumInt.Equal(other.EnumInt)
 }
 
 func TestEnum(t *testing.T) {
