@@ -6,33 +6,44 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type EnumTest struct {
-	*EnumInt
-}
+type EnumTest EnumIntImpl
 
+/*
 // this needs to be duplicated for each enum type
 func NewEnumTest(keys []int, current int) *EnumTest {
 	enum := new(EnumTest)
-	enum.EnumInt = NewEnumInt(keys, current)
+	enum.EnumIntImpl = NewEnumInt(keys, current)
 	return enum
-}
-
-func (enum *EnumTest) Set(current int) error {
-	return enum.EnumInt.Set(current)
 }
 
 func (enum *EnumTest) Clone() *EnumTest {
 	newenum := new(EnumTest)
-	newenum.EnumInt = enum.EnumInt.Clone()
+	newenum.EnumIntImpl = enum.EnumIntImpl.Clone()
 	return newenum
 }
 
 func (enum *EnumTest) Equal(other *EnumTest) bool {
-	return enum.EnumInt.Equal(other.EnumInt)
+	return enum.EnumIntImpl.Equal(other)
 }
+*/
+type EnumOther EnumIntImpl
 
+/*
+// this needs to be duplicated for each enum type
+func NewEnumOther(keys []int, current int) *EnumOther {
+	enum := new(EnumOther)
+	enum.EnumIntImpl = NewEnumInt(keys, current)
+	return enum
+}
+func (enum *EnumOther) Clone() *EnumOther {
+	newenum := new(EnumOther)
+	newenum.EnumIntImpl = enum.EnumIntImpl.Clone()
+	return newenum
+}
+*/
 func TestEnum(t *testing.T) {
-	e := NewEnumInt([]int{1, 2, 3}, 2)
+	e := new(EnumTest)
+	e.Init([]int{1, 2, 3}, 2)
 	e.Print()
 	f := e.Clone()
 	f.Set(2)
@@ -41,4 +52,13 @@ func TestEnum(t *testing.T) {
 	f.Set(1)
 	f.Print()
 	assert.False(t, e.Equal(f))
+
+	g := NewEnumOther([]int{1, 2, 3}, 2)
+	AllowTestOnly(e)
+	AllowTestOnly(g)
+
+}
+
+func AllowTestOnly(e EnumTest) {
+	e.Print()
 }

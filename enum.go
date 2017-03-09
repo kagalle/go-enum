@@ -25,18 +25,28 @@ type Enum interface {
 	Print()
 }
 */
+type Enum interface {
+	KeyExists(current int) bool
+	Equal(other *Enumbase) bool
+}
+
 type Enumbase struct {
 	keys map[int]interface{}
 }
 
 // this needs to be duplicated for each enum type
-func NewEnumbase(keys []int) *Enumbase {
-	enum := new(Enumbase)
+func (enum *Enumbase) Init(keys []int) *Enumbase {
+	// enum := new(Enumbase)
 	enum.keys = make(map[int]interface{})
 	for _, val := range keys {
 		enum.keys[val] = nil
 	}
 	return enum
+}
+
+func (enum *Enumbase) KeyExists(current int) bool {
+	_, ok := enum.keys[current]
+	return ok
 }
 
 /*
@@ -66,8 +76,19 @@ func (enum *Enumbase) Set(current int) error {
 // Is the content of this Enumbase equivelant to the other Enumbase?
 // Does not account for the type equality of the objects they're in.
 func (enum *Enumbase) Equal(other *Enumbase) bool {
-	// TODO - len has to be equal and keys in A have to be in B
-	return true
+	isequal := true
+	if len(enum.keys) == len(other.keys) {
+		for _, val := range enum.keys {
+			_, ok := other.keys[val.(int)]
+			if !ok {
+				isequal = false
+				break
+			}
+		}
+	} else {
+		isequal = false
+	}
+	return isequal
 }
 
 /*
