@@ -7,17 +7,18 @@ import (
 )
 
 type EnumTest struct {
-	*EnumIntImpl
+	*Enumint
 }
 
 // this needs to be duplicated for each enum type
 func NewEnumTest(keys []int, current int) *EnumTest {
 	enum := new(EnumTest)
-	enum.EnumIntImpl = new(EnumIntImpl)
-	enum.EnumIntImpl.Init(keys, current)
+	enum.Enumint = new(Enumint)
+	enum.Enumint.Init(keys, current)
 	return enum
 }
 
+/*
 func (enum *EnumTest) Clone() *EnumTest {
 	newenum := new(EnumTest)
 	newenum.EnumIntImpl = enum.EnumIntImpl.Clone()
@@ -27,7 +28,8 @@ func (enum *EnumTest) Clone() *EnumTest {
 func (enum *EnumTest) Equal(other *EnumTest) bool {
 	return enum.EnumIntImpl.Equal(other.EnumIntImpl)
 }
-
+*/
+/*
 type EnumOther struct {
 	*EnumIntImpl
 }
@@ -44,17 +46,17 @@ func (enum *EnumOther) Clone() *EnumOther {
 	newenum.EnumIntImpl = enum.EnumIntImpl.Clone()
 	return newenum
 }
-
+*/
 func TestEnum(t *testing.T) {
-	e := new(EnumTest)
-	e.Init([]int{1, 2, 3}, 2)
-	e.Print()
+	e := NewEnumTest([]int{1, 2, 3}, 2)
+	e.Print("e2")
 	f := e.Clone()
 	f.Set(2)
-	f.Print()
+	f.Print("f2")
 	assert.True(t, e.Equal(f))
 	f.Set(1)
-	f.Print()
+	e.Print("e2")
+	f.Print("f1")
 	assert.False(t, e.Equal(f))
 
 	// g := NewEnumOther([]int{1, 2, 3}, 2)
@@ -64,5 +66,5 @@ func TestEnum(t *testing.T) {
 }
 
 func AllowTestOnly(e *EnumTest) {
-	e.Print()
+	e.Print("e - AllowTestOnly")
 }
