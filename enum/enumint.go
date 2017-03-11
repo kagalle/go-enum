@@ -1,4 +1,4 @@
-package util
+package enum
 
 // https://play.golang.org/p/4FkNSiUDMg
 import (

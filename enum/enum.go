@@ -1,7 +1,7 @@
 // The enum package provides a minimal version of an enum type, in a way similar
 // to what is found in Java.  Each enum is a separate type and so can prevent
 // type errors, ie. two enums that contain the same element will not be equal.
-package util
+package enum
 
 // https://gist.github.com/skarllot/102a5e5ea73861ff5afe
 // http://stackoverflow.com/a/28393465/3728147
