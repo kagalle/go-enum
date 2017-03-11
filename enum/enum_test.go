@@ -33,7 +33,7 @@ func TestEnum(t *testing.T) {
 	e.Print("e2")
 	assert.False(t, e.ValueExists(0))
 	assert.Equal(t, e.getValuesMap()[1], nil)
-	assert.Equal(t, e.getCurrent(), 2)
+	assert.Equal(t, e.GetCurrent(), 2)
 	f := e.Clone()
 	f.Set(2)
 	f.Print("f2")

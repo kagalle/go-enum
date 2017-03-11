@@ -25,8 +25,8 @@ type Enum interface {
 	Print(s string)
 	// ValueExists return true if the given value is a member of the enum.
 	ValueExists(current int) bool
+	// return current enum value
+	GetCurrent() int
 	// getValuesMap getter - support for Equal()
 	getValuesMap() map[int]interface{}
-	// getCurrent getter - support for Equal()
-	getCurrent() int
 }

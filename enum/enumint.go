@@ -59,7 +59,7 @@ func (enum *Enumint) Equal(other Enum) bool {
 	} else {
 		valuesMapEqual = false
 	}
-	currentEqual := enum.getCurrent() == other.getCurrent()
+	currentEqual := enum.GetCurrent() == other.GetCurrent()
 	return valuesMapEqual && currentEqual
 }
 
@@ -67,7 +67,7 @@ func (enum *Enumint) getValuesMap() map[int]interface{} {
 	return enum.valuesMap
 }
 
-func (enum *Enumint) getCurrent() int {
+func (enum *Enumint) GetCurrent() int {
 	return enum.current
 }
 
