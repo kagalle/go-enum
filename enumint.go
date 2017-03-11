@@ -11,6 +11,12 @@ type Enumint struct {
 	current int
 }
 
+func NewEnumint(keys []int, current int) *Enumint {
+	enumint := new(Enumint)
+	enumint.Init(keys, current)
+	return enumint
+}
+
 // this needs to be duplicated for each enum type
 func (enum *Enumint) Init(keys []int, current int) {
 	// enum := new(Enumbase)
@@ -22,11 +28,6 @@ func (enum *Enumint) Init(keys []int, current int) {
 }
 
 func (enum *Enumint) Clone() Enum {
-	// http://stackoverflow.com/a/27848197/3728147
-	// keys := make([]int, len(enum.keys))
-	// for _, val := range enum.keys {
-	// 	keys[val] = nil
-	// }
 	newenum := new(Enumint)
 	newenum.keys = enum.keys
 	newenum.current = enum.current
