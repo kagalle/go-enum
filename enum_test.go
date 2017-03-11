@@ -11,9 +11,9 @@ type EnumTest struct {
 }
 
 // this needs to be duplicated for each enum type
-func NewEnumTest(keys []int, current int) *EnumTest {
+func NewEnumTest(valuesMap []int, current int) *EnumTest {
 	enum := new(EnumTest)
-	enum.Enumint = NewEnumint(keys, current)
+	enum.Enumint = NewEnumint(valuesMap, current)
 	return enum
 }
 
@@ -22,17 +22,17 @@ type EnumOther struct {
 }
 
 // this needs to be duplicated for each enum type
-func NewEnumOther(keys []int, current int) *EnumOther {
+func NewEnumOther(valuesMap []int, current int) *EnumOther {
 	enum := new(EnumOther)
-	enum.Enumint = NewEnumint(keys, current)
+	enum.Enumint = NewEnumint(valuesMap, current)
 	return enum
 }
 
 func TestEnum(t *testing.T) {
 	e := NewEnumTest([]int{1, 2, 3}, 2)
 	e.Print("e2")
-	assert.False(t, e.keyExists(0))
-	assert.Equal(t, e.getKeys()[1], nil)
+	assert.False(t, e.ValueExists(0))
+	assert.Equal(t, e.getValuesMap()[1], nil)
 	assert.Equal(t, e.getCurrent(), 2)
 	f := e.Clone()
 	f.Set(2)

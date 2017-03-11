@@ -10,21 +10,23 @@ package util
 
 type Enum interface {
 	// Initialize a newly created enum with the supplied values.
-	// keys is a list of elements that are legal values in the enum.
-	// current is the one element that exists in keys that is the enum's current
+	// valuesMap is a list of elements that are legal values in the enum.
+	// current is the one element that exists in valuesMap that is the enum's current
 	// value.
-	Init(keys []int, current int)
-	// Clone creates a new enum with the same keys and current value as this.
+	Init(valuesMap []int, current int)
+	// Clone creates a new enum with the same valuesMap and current value as this.
 	Clone() Enum
-	// Set changes the current value of the enum to a new value that is within keys.
+	// Set changes the current value of the enum to a new value that is within valuesMap.
 	Set(current int) error
-	// Equal tests when this enum equals the suppied other enum.  The keys and
+	// Equal tests when this enum equals the suppied other enum.  The valuesMap and
 	// the current value must match.
 	Equal(other Enum) bool
 	// Print prints to standard output the content of this enum.
 	Print(s string)
-	// support for Equal()
-	getKeys() map[int]interface{}
+	// ValueExists return true if the given value is a member of the enum.
+	ValueExists(current int) bool
+	// getValuesMap getter - support for Equal()
+	getValuesMap() map[int]interface{}
+	// getCurrent getter - support for Equal()
 	getCurrent() int
-	keyExists(current int) bool
 }

@@ -7,35 +7,35 @@ import (
 )
 
 type Enumint struct {
-	keys    map[int]interface{}
-	current int
+	valuesMap map[int]interface{}
+	current   int
 }
 
-func NewEnumint(keys []int, current int) *Enumint {
+func NewEnumint(valuesMap []int, current int) *Enumint {
 	enumint := new(Enumint)
-	enumint.Init(keys, current)
+	enumint.Init(valuesMap, current)
 	return enumint
 }
 
 // this needs to be duplicated for each enum type
-func (enum *Enumint) Init(keys []int, current int) {
+func (enum *Enumint) Init(valuesMap []int, current int) {
 	// enum := new(Enumbase)
-	enum.keys = make(map[int]interface{})
-	for _, val := range keys {
-		enum.keys[val] = nil
+	enum.valuesMap = make(map[int]interface{})
+	for _, val := range valuesMap {
+		enum.valuesMap[val] = nil
 	}
 	enum.current = current
 }
 
 func (enum *Enumint) Clone() Enum {
 	newenum := new(Enumint)
-	newenum.keys = enum.keys
+	newenum.valuesMap = enum.valuesMap
 	newenum.current = enum.current
 	return newenum
 }
 
 func (enum *Enumint) Set(current int) error {
-	if !enum.keyExists(current) {
+	if !enum.ValueExists(current) {
 		return errors.New("invalid enum value")
 	} else {
 		enum.current = current
@@ -46,33 +46,33 @@ func (enum *Enumint) Set(current int) error {
 // Is the content of this Enumbase equivelant to the other Enumbase?
 // Does not account for the type equality of the objects they're in.
 func (enum *Enumint) Equal(other Enum) bool {
-	keysEqual := true
-	otherkeys := other.getKeys()
-	if len(enum.keys) == len(otherkeys) {
-		for index, _ := range enum.keys {
-			_, ok := otherkeys[index]
+	valuesMapEqual := true
+	othervaluesMap := other.getValuesMap()
+	if len(enum.valuesMap) == len(othervaluesMap) {
+		for index, _ := range enum.valuesMap {
+			_, ok := othervaluesMap[index]
 			if !ok {
-				keysEqual = false
+				valuesMapEqual = false
 				break
 			}
 		}
 	} else {
-		keysEqual = false
+		valuesMapEqual = false
 	}
 	currentEqual := enum.getCurrent() == other.getCurrent()
-	return keysEqual && currentEqual
+	return valuesMapEqual && currentEqual
 }
 
-func (enum *Enumint) getKeys() map[int]interface{} {
-	return enum.keys
+func (enum *Enumint) getValuesMap() map[int]interface{} {
+	return enum.valuesMap
 }
 
 func (enum *Enumint) getCurrent() int {
 	return enum.current
 }
 
-func (enum *Enumint) keyExists(current int) bool {
-	_, ok := enum.keys[current]
+func (enum *Enumint) ValueExists(current int) bool {
+	_, ok := enum.valuesMap[current]
 	return ok
 }
 
