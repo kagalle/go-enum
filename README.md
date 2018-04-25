@@ -53,4 +53,33 @@ Java's enum is a special type where all enums inherit from `java.lang.Enum`.  Th
 
 Go-enum does the same thing using `struct` as a basis and an interface to define the available enum operations.
 
-See `enum_test.go` for an example of useage.
+Example usage:
+
+```go
+const (
+	Active  = iota 
+	Refresh = iota 
+	Expired = iota 
+)
+
+type TokenState struct {
+	*enum.Enumint
+}
+
+// this needs to be duplicated for each enum type
+func NewTokenState(valuesMap []int, current int) *TokenState {
+	state := new(TokenState)
+	state.Enumint = enum.NewEnumint(valuesMap, current)
+	return state
+}
+
+func work() TokenState {
+    tokenState := NewTokenState([]int{Active, Refresh, Expired}, Expired)
+    if true {  // if active
+        tokenState.Set(Active)
+    }
+    return *tokenState
+}
+```
+
+See also `enum_test.go` for an alternate example of useage.
